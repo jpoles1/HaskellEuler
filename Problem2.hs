@@ -1,4 +1,3 @@
-import Data.List
 main :: IO ()
 main = do
   putStr "Problem 2:"
