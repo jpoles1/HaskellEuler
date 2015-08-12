@@ -7,10 +7,14 @@ main = do
 problem3 :: Int
 problem3 = maximum $ primefactors [600851475143] []
 -- | Prime Factorization
+primes = findPrimes 10000
 primefactors :: [Int] -> [Int] -> [Int]
 primefactors [] prime = prime
-primefactors nonprime prime = undefined
-  where primes = findPrimes 1000
+primefactors nonprime prime = if current `elem` primes then primefactors (tail nonprime) $ current:prime else primefactors (current `div` smallestPrime:tail nonprime) $ smallestPrime:prime
+  where current = head nonprime
+        smallestPrime = smallestFactor current
+-- | Find the smallest prime factor
+smallestFactor val = foldl (\acc x -> if val `rem` x == 0 then x else acc) 1 primes
 -- | Prime numbers, immediately exclude all evens except 2.
 findPrimes :: Int -> [Int]
 findPrimes n = erossieve 1 (2:[3,5..n])
